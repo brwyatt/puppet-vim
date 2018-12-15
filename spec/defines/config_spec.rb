@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'vim::user_config' do
+describe 'vim::config' do
   let(:title) { 'namevar' }
   let(:params) do
     {}

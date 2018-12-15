@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe 'vim::user_plugin' do
+describe 'vim::bundle' do
   let(:title) { 'namevar' }
   let(:params) do
     {}

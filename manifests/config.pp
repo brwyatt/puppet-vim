@@ -3,7 +3,7 @@
 # @summary A short summary of the purpose of this defined type.
 #
 # @example
-#   vim::user_plugin { 'namevar': }
-define vim::user_plugin(
+#   vim::config { 'namevar': }
+define vim::config(
 ) {
 }
