@@ -1,0 +1,2 @@
+---
+vim::install::package_name: 'vim-nox'

@@ -1,1 +1,2 @@
 ---
+vim::install::package_ensure: 'latest'
