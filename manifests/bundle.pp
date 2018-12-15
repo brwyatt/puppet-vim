@@ -8,11 +8,12 @@ define vim::bundle(
   String $owner,
   String $repo,
   String $vim_dir,
+  String $bundle_name = $name,
   Enum['present', 'absent'] $ensure = 'present',
   String $provider = 'git',
   String $revision = 'master',
 ) {
-  $path = "${vim_dir}/bundle/${name}"
+  $path = "${vim_dir}/bundle/${bundle_name}"
   vcsrepo { "vim bundle: ${path}":
     ensure   => latest,
     path     => $path,
