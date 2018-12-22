@@ -6,7 +6,7 @@
 #   include vim::configure
 class vim::configure {
   # No global configs, but we can realize user configs here
-  Vim::Bundle <| |>
   Vim::Config <| |>
-  Vim::Plugin <| |>
+  -> Vim::Plugin <| |>
+  -> Vim::Bundle <| |>
 }
