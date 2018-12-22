@@ -2,6 +2,8 @@
   Optional[String] $before = undef,
   Optional[String] $after = undef,
 | -%>
+" THIS FILE IS MANAGED BY PUPPET
+
 <% if $before { -%>
 <%= $before %>
 

@@ -70,6 +70,8 @@ describe 'vim::config' do
     	    'mode'   => '0640',
     	  ).with_content(
           <<~HEREDOC
+            " THIS FILE IS MANAGED BY PUPPET
+
             " Pathogen
             execute pathogen#infect()
             call pathogen#helptags() " generate helptags for everything in 'runtimepath'
@@ -97,6 +99,8 @@ describe 'vim::config' do
       	    'mode'   => '0640',
     	    ).with_content(
             <<~HEREDOC
+              " THIS FILE IS MANAGED BY PUPPET
+
               " BEFORE
 
               " Pathogen
