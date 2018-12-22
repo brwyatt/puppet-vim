@@ -5,5 +5,17 @@
 # @example
 #   vim::config { 'namevar': }
 define vim::config(
+  String $owner,
+  Optional[String] $content = epp('vim/pathogen_vimrc.epp'),
+  Enum['present', 'absent'] $ensure = 'present',
+  String $group = $owner,
+  String $path = $name,
 ) {
+  file { $path:
+    ensure  => file,
+    owner   => $owner,
+    group   => $group,
+    mode    => '0640',
+    content => $content,
+  }
 }
