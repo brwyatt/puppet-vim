@@ -16,9 +16,18 @@ describe 'vim::bundle' do
 
       it { is_expected.to compile }
       it {
-        is_expected.to contain_vcsrepo("vim bundle: /tmp/bundle/test-bundle").with(
+        is_expected.to contain_vcsrepo('vim bundle: /tmp/bundle/test-bundle').with(
           'ensure'   => 'latest',
           'provider' => 'git',
+        )
+      }
+      it {
+        is_expected.to contain_file('/tmp/bundle/test-bundle').with(
+          'ensure' => 'directory',
+          'path'   => '/tmp/bundle/test-bundle',
+          'owner'  => 'root',
+          'group'  => 'root',
+          'mode'   => '0775',
         )
       }
       it { is_expected.to contain_class('git') }
