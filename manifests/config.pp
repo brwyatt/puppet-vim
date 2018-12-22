@@ -48,7 +48,7 @@ define vim::config(
   }
 
   file { "${path}/.vimrc":
-    ensure => $file_ensure,
+    ensure  => $file_ensure,
     mode    => '0640',
     content => epp($vimrc_template, $vimrc_params),
   }

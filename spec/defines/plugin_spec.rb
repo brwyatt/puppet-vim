@@ -13,102 +13,98 @@ describe 'vim::plugin' do
     context "on #{os}" do
       let(:facts) { os_facts }
 
-      context "with puppet source" do
+      context 'with puppet source' do
         let(:params) do
-          super().merge({
-            'source' => 'puppet:///modules/somemodule/somefile',
-          })
+          super().merge('source' => 'puppet:///modules/somemodule/somefile')
         end
+
         it { is_expected.to compile }
         it { is_expected.not_to contain_remote_file('/tmp/plugin/test_plugin.vim') }
-    	  it {
-    	    is_expected.to contain_file('/tmp/plugin/test_plugin.vim').with(
-    	      'ensure'  => 'file',
-    	      'path'    => '/tmp/plugin/test_plugin.vim',
-    	      'owner'   => 'root',
-    	      'group'   => 'root',
-    	      'mode'    => '0640',
-            'source'  => 'puppet:///modules/somemodule/somefile'
-    	    )
+        it {
+          is_expected.to contain_file('/tmp/plugin/test_plugin.vim').with(
+            'ensure'  => 'file',
+            'path'    => '/tmp/plugin/test_plugin.vim',
+            'owner'   => 'root',
+            'group'   => 'root',
+            'mode'    => '0640',
+            'source'  => 'puppet:///modules/somemodule/somefile',
+          )
         }
         it { is_expected.not_to contain_file('/tmp/autoload/test_plugin.vim') }
-        context "with autoload" do
+        context 'with autoload' do
           let(:params) do
-            super().merge({
-              'autoload' => true,
-            })
+            super().merge('autoload' => true)
           end
+
           it { is_expected.to compile }
           it { is_expected.not_to contain_remote_file('/tmp/plugin/test_plugin.vim') }
-    	    it {
-    	      is_expected.to contain_file('/tmp/plugin/test_plugin.vim').with(
-    	        'ensure'  => 'file',
-    	        'path'    => '/tmp/plugin/test_plugin.vim',
-    	        'owner'   => 'root',
-    	        'group'   => 'root',
-    	        'mode'    => '0640',
-              'source'  => 'puppet:///modules/somemodule/somefile'
-    	      )
+          it {
+            is_expected.to contain_file('/tmp/plugin/test_plugin.vim').with(
+              'ensure'  => 'file',
+              'path'    => '/tmp/plugin/test_plugin.vim',
+              'owner'   => 'root',
+              'group'   => 'root',
+              'mode'    => '0640',
+              'source'  => 'puppet:///modules/somemodule/somefile',
+            )
           }
-    	    it {
-    	      is_expected.to contain_file('/tmp/autoload/test_plugin.vim').with(
-    	        'ensure' => 'link',
-    	        'path'   => '/tmp/autoload/test_plugin.vim',
-    	        'owner'  => 'root',
-    	        'group'  => 'root',
-    	        'mode'   => '0777',
+          it {
+            is_expected.to contain_file('/tmp/autoload/test_plugin.vim').with(
+              'ensure' => 'link',
+              'path'   => '/tmp/autoload/test_plugin.vim',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0777',
               'target' => '/tmp/plugin/test_plugin.vim',
-    	      )
+            )
           }
         end
       end
- 
-      context "with https source" do
+
+      context 'with https source' do
         let(:params) do
-          super().merge({
-            'source' => 'https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim',
-          })
+          super().merge('source' => 'https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim')
         end
+
         it { is_expected.to compile }
         it { is_expected.not_to contain_file('/tmp/plugin/test_plugin.vim') }
-    	  it {
-    	    is_expected.to contain_remote_file('/tmp/plugin/test_plugin.vim').with(
-    	      'ensure'  => 'present',
-    	      'path'    => '/tmp/plugin/test_plugin.vim',
-    	      'owner'   => 'root',
-    	      'group'   => 'root',
-    	      'mode'    => '0640',
+        it {
+          is_expected.to contain_remote_file('/tmp/plugin/test_plugin.vim').with(
+            'ensure'  => 'present',
+            'path'    => '/tmp/plugin/test_plugin.vim',
+            'owner'   => 'root',
+            'group'   => 'root',
+            'mode'    => '0640',
             'source'  => 'https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim',
-    	    )
+          )
         }
         it { is_expected.not_to contain_file('/tmp/autoload/test_plugin.vim') }
-        context "with autoload" do
+        context 'with autoload' do
           let(:params) do
-            super().merge({
-              'autoload' => true,
-            })
+            super().merge('autoload' => true)
           end
+
           it { is_expected.to compile }
           it { is_expected.not_to contain_file('/tmp/plugin/test_plugin.vim') }
-    	    it {
-    	      is_expected.to contain_remote_file('/tmp/plugin/test_plugin.vim').with(
-    	        'ensure'  => 'present',
-    	        'path'    => '/tmp/plugin/test_plugin.vim',
-    	        'owner'   => 'root',
-    	        'group'   => 'root',
-    	        'mode'    => '0640',
+          it {
+            is_expected.to contain_remote_file('/tmp/plugin/test_plugin.vim').with(
+              'ensure'  => 'present',
+              'path'    => '/tmp/plugin/test_plugin.vim',
+              'owner'   => 'root',
+              'group'   => 'root',
+              'mode'    => '0640',
               'source'  => 'https://raw.githubusercontent.com/tpope/vim-pathogen/master/autoload/pathogen.vim',
-    	      )
+            )
           }
-    	    it {
-    	      is_expected.to contain_file('/tmp/autoload/test_plugin.vim').with(
-    	        'ensure' => 'link',
-    	        'path'   => '/tmp/autoload/test_plugin.vim',
-    	        'owner'  => 'root',
-    	        'group'  => 'root',
-    	        'mode'   => '0777',
+          it {
+            is_expected.to contain_file('/tmp/autoload/test_plugin.vim').with(
+              'ensure' => 'link',
+              'path'   => '/tmp/autoload/test_plugin.vim',
+              'owner'  => 'root',
+              'group'  => 'root',
+              'mode'   => '0777',
               'target' => '/tmp/plugin/test_plugin.vim',
-    	      )
+            )
           }
         end
       end
