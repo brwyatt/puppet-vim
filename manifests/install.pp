@@ -14,6 +14,6 @@ class vim::install (
   }
 
   if defined(Exec['apt_update']) {
-    Exec['apt_update'] -> Package[$package_name]
+    Exec['apt_update'] -> Package['vim']
   }
 }
