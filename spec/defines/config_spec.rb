@@ -62,6 +62,16 @@ describe 'vim::config' do
     	  )
       }
     	it {
+    	  is_expected.to contain_file('/tmp/.vim/.netrwhist').with(
+    	    'ensure'  => 'file',
+    	    'path'    => '/tmp/.vim/.netrwhist',
+    	    'owner'   => 'root',
+    	    'group'   => 'root',
+    	    'mode'    => '0664',
+          'replace' => 'no',
+        )
+      }
+    	it {
     	  is_expected.to contain_file('/tmp/.vimrc').with(
     	    'ensure' => 'file',
     	    'path'   => '/tmp/.vimrc',

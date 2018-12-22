@@ -47,6 +47,12 @@ define vim::config(
     mode   => '0775',
   }
 
+  file { "${path}/.vim/.netrwhist":
+    ensure  => $file_ensure,
+    mode    => '0664',
+    replace => no,
+  }
+
   file { "${path}/.vimrc":
     ensure  => $file_ensure,
     mode    => '0640',
