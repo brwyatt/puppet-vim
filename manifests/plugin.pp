@@ -14,8 +14,13 @@ define vim::plugin(
   Optional[String] $content = undef,
   Optional[String] $source = undef,
 ) {
-  $path = "${vim_dir}/plugin/${plugin_name}"
-  $autoload_path = "${vim_dir}/autoload/${plugin_name}"
+  if $plugin_name =~ /\.vim$/ {
+    $_plugin_name = $plugin_name
+  } else {
+    $_plugin_name = "${plugin_name}.vim"
+  }
+  $path = "${vim_dir}/plugin/${_plugin_name}"
+  $autoload_path = "${vim_dir}/autoload/${_plugin_name}"
 
   $remote_file_ensure = $ensure ? {
     'present' => present,
