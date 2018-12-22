@@ -1,7 +1,7 @@
 require 'spec_helper'
 
 describe 'vim::config' do
-  let(:title) { '/tmp/.vimrc' }
+  let(:title) { '/tmp' }
   let(:params) do
     {
       'owner'   => 'root',
@@ -13,6 +13,54 @@ describe 'vim::config' do
       let(:facts) { os_facts }
 
     	it { is_expected.to compile }
+    	it {
+    	  is_expected.to contain_file('/tmp/.vim').with(
+    	    'ensure'  => 'directory',
+    	    'path'    => '/tmp/.vim',
+    	    'owner'   => 'root',
+    	    'group'   => 'root',
+    	    'mode'    => '0700',
+          'purge'   => true,
+          'recurse' => true,
+          'force'   => true,
+    	  )
+      }
+    	it {
+    	  is_expected.to contain_file('/tmp/.vim/autoload').with(
+    	    'ensure'  => 'directory',
+    	    'path'    => '/tmp/.vim/autoload',
+    	    'owner'   => 'root',
+    	    'group'   => 'root',
+    	    'mode'    => '0775',
+          'purge'   => true,
+          'recurse' => true,
+          'force'   => true,
+    	  )
+      }
+    	it {
+    	  is_expected.to contain_file('/tmp/.vim/bundle').with(
+    	    'ensure'  => 'directory',
+    	    'path'    => '/tmp/.vim/bundle',
+    	    'owner'   => 'root',
+    	    'group'   => 'root',
+    	    'mode'    => '0775',
+          'purge'   => true,
+          'recurse' => true,
+          'force'   => true,
+    	  )
+      }
+    	it {
+    	  is_expected.to contain_file('/tmp/.vim/plugin').with(
+    	    'ensure'  => 'directory',
+    	    'path'    => '/tmp/.vim/plugin',
+    	    'owner'   => 'root',
+    	    'group'   => 'root',
+    	    'mode'    => '0775',
+          'purge'   => true,
+          'recurse' => true,
+          'force'   => true,
+    	  )
+      }
     	it {
     	  is_expected.to contain_file('/tmp/.vimrc').with(
     	    'ensure' => 'file',
@@ -29,10 +77,10 @@ describe 'vim::config' do
         )
     	}
 
-      context 'with template_params' do
+      context 'with vimrc_params' do
         let(:params) do
           super().merge({
-            'template_params' => {
+            'vimrc_params' => {
               'before' => '" BEFORE',
               'after' => '" AFTER',
             }

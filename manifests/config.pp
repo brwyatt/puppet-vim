@@ -6,17 +6,40 @@
 #   vim::config { 'namevar': }
 define vim::config(
   String $owner,
-  String $template = 'vim/pathogen_vimrc.epp',
-  Hash $template_params = {},
+  String $vimrc_template = 'vim/pathogen_vimrc.epp',
+  Hash $vimrc_params = {},
   Enum['present', 'absent'] $ensure = 'present',
   String $group = $owner,
   String $path = $name,
 ) {
-  file { $path:
-    ensure  => file,
+  File {
     owner   => $owner,
     group   => $group,
+    purge   => true,
+    recurse => true,
+    force   => true,
+  }
+
+  file { "${path}/.vim":
+    ensure => directory,
+    mode   => '0700',
+  }
+  file { "${path}/.vim/autoload":
+    ensure => directory,
+    mode   => '0775',
+  }
+  file { "${path}/.vim/bundle":
+    ensure => directory,
+    mode   => '0775',
+  }
+  file { "${path}/.vim/plugin":
+    ensure => directory,
+    mode   => '0775',
+  }
+
+  file { "${path}/.vimrc":
+    ensure  => file,
     mode    => '0640',
-    content => epp($template, $template_params),
+    content => epp($vimrc_template, $vimrc_params),
   }
 }
