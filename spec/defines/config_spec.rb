@@ -21,16 +21,21 @@ describe 'vim::config' do
     	    'group'  => 'root',
     	    'mode'   => '0640',
     	  ).with_content(
-          /^\s*execute pathogen#infect\(\) *(".*|)$/
-        ).with_content(
-          /^\s*call pathogen#helptags\(\) *(".*|)$/
+          <<~HEREDOC
+            " Pathogen
+            execute pathogen#infect()
+            call pathogen#helptags() " generate helptags for everything in 'runtimepath'
+          HEREDOC
         )
     	}
 
-      context 'with content' do
+      context 'with template_params' do
         let(:params) do
           super().merge({
-            'content' => '" test',
+            'template_params' => {
+              'before' => '" BEFORE',
+              'after' => '" AFTER',
+            }
           })
         end
 
@@ -42,7 +47,17 @@ describe 'vim::config' do
       	    'owner'  => 'root',
       	    'group'  => 'root',
       	    'mode'   => '0640',
-      	  ).with_content('" test')
+    	    ).with_content(
+            <<~HEREDOC
+              " BEFORE
+
+              " Pathogen
+              execute pathogen#infect()
+              call pathogen#helptags() " generate helptags for everything in 'runtimepath'
+
+              " AFTER
+            HEREDOC
+          )
       	}
       end
 

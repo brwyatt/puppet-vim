@@ -1,3 +1,15 @@
+<%- |
+  Optional[String] $before = undef,
+  Optional[String] $after = undef,
+| -%>
+<% if $before { -%>
+<%= $before %>
+
+<% } -%>
 " Pathogen
 execute pathogen#infect()
 call pathogen#helptags() " generate helptags for everything in 'runtimepath'
+<% if $after { -%>
+
+<%= $after %>
+<% } -%>

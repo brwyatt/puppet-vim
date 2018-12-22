@@ -6,7 +6,8 @@
 #   vim::config { 'namevar': }
 define vim::config(
   String $owner,
-  Optional[String] $content = epp('vim/pathogen_vimrc.epp'),
+  String $template = 'vim/pathogen_vimrc.epp',
+  Hash $template_params = {},
   Enum['present', 'absent'] $ensure = 'present',
   String $group = $owner,
   String $path = $name,
@@ -16,6 +17,6 @@ define vim::config(
     owner   => $owner,
     group   => $group,
     mode    => '0640',
-    content => $content,
+    content => epp($template, $template_params),
   }
 }
