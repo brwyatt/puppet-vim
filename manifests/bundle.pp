@@ -16,8 +16,18 @@ define vim::bundle(
 ) {
   $path = "${vim_dir}/bundle/${bundle_name}"
 
+  $dir_ensure = $ensure ? {
+    'present' => directory,
+    'absent'  => absent,
+  }
+
+  $vcs_ensure = $ensure ? {
+    'present' => latest,
+    'absent'  => absent,
+  }
+
   file { $path:
-    ensure => directory,
+    ensure => $dir_ensure,
     owner  => $owner,
     group  => $group,
     mode   => '0775',
@@ -25,7 +35,7 @@ define vim::bundle(
   }
 
   vcsrepo { "vim bundle: ${path}":
-    ensure   => latest,
+    ensure   => $vcs_ensure,
     path     => $path,
     provider => $provider,
     owner    => $owner,

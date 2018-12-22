@@ -20,25 +20,35 @@ define vim::config(
     force   => true,
   }
 
+  $dir_ensure = $ensure ? {
+    'present' => directory,
+    'absent'  => absent,
+  }
+
+  $file_ensure = $ensure ? {
+    'present' => file,
+    'absent'  => absent,
+  }
+
   file { "${path}/.vim":
-    ensure => directory,
+    ensure => $dir_ensure,
     mode   => '0700',
   }
   file { "${path}/.vim/autoload":
-    ensure => directory,
+    ensure => $dir_ensure,
     mode   => '0775',
   }
   file { "${path}/.vim/bundle":
-    ensure => directory,
+    ensure => $dir_ensure,
     mode   => '0775',
   }
   file { "${path}/.vim/plugin":
-    ensure => directory,
+    ensure => $dir_ensure,
     mode   => '0775',
   }
 
   file { "${path}/.vimrc":
-    ensure  => file,
+    ensure => $file_ensure,
     mode    => '0640',
     content => epp($vimrc_template, $vimrc_params),
   }
