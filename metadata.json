@@ -1,6 +1,6 @@
 {
   "name": "brwyatt-vim",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "author": "Bryan Wyatt",
   "summary": "Install vim and manage user configuration files",
   "license": "LGPL-3.0",
