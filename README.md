@@ -1,5 +1,14 @@
 # vim
 
+[![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/brwyatt/puppet-vim/master/LICENSE)
+[![GitHub issues](https://img.shields.io/github/issues/brwyatt/puppet-vim.svg)](https://github.com/brwyatt/puppet-vim/issues)
+[![GitHub forks](https://img.shields.io/github/forks/brwyatt/puppet-vim.svg)](https://github.com/brwyatt/puppet-vim/network)
+[![GitHub stars](https://img.shields.io/github/stars/brwyatt/puppet-vim.svg)](https://github.com/brwyatt/puppet-vim/stargazers)
+
+[![Puppet Forge](https://img.shields.io/puppetforge/v/brwyatt/vim.svg)](https://forge.puppetlabs.com/brwyatt/vim)
+[![Puppet Forge - downloads](https://img.shields.io/puppetforge/dt/brwyatt/vim.svg)](https://forge.puppetlabs.com/brwyatt/vim)
+[![Puppet Forge - scores](https://img.shields.io/puppetforge/f/brwyatt/vim.svg)](https://forge.puppetlabs.com/brwyatt/vim)
+
 Install vim and manage user configuration files
 
 #### Table of Contents
@@ -15,71 +24,93 @@ Install vim and manage user configuration files
 
 ## Description
 
-Briefly tell users why they might want to use your module. Explain what your module does and what kind of problems users can solve with it.
-
-This should be a fairly short description helps the user decide if your module is what they want.
+This module installs vim and manages vim user configuration files. Currently, this module allows managing of user `.vimrc`, vim plugins, and Pathogen bundles.
 
 ## Setup
 
-### What vim affects **OPTIONAL**
+### What vim affects
 
-If it's obvious what your module touches, you can skip this section. For example, folks can probably figure out that your mysql_instance module affects their MySQL instances.
+When this module is used to manage a user's vim config, it will manage the entire `.vim` directory for that user, and remove unmannaged files.
 
-If there's more that they should know about, though, this is the place to mention:
+### Setup Requirements
 
-* Files, packages, services, or operations that the module will alter, impact, or execute.
-* Dependencies that your module automatically installs.
-* Warnings or other important notices.
+This module currently only officially supports Ubuntu, but likely will work on most other systems, particularly of a Debian flavor. If using on non-Debian based distros, it may be necessary to manually provide the vim package name. Additionally, only Git-based repos are officially supported. Others may work, but only Git has been tested.
 
-### Setup Requirements **OPTIONAL**
-
-If your module requires anything extra before setting up (pluginsync enabled, another module, etc.), mention it here.
-
-If your most recent release breaks compatibility or requires particular steps for upgrading, you might want to include an additional "Upgrading" section here.
+This module additionally has the following dependencies:
+* `lwf/remote_file`: used when `Vim::Plugin` is provided an http/https URL for the `source` parameter.
+* `puppetlabs/git`: used to install Pathogen bundles from git (if using a Git repo)
+* `puppetlabs/stdlib`: default
+* `puppetlabs/vcsrepo`: used for installing/managing Pathogen bundles. Might be able to support other repo types, but only Git has been tested.
 
 ### Beginning with vim
 
-The very basic steps needed for a user to get the module up and running. This can include setup steps, if necessary, or it can be an example of the most basic use of the module.
+Install the module with:
+
+```
+puppet module install brwyatt-vim
+```
 
 ## Usage
 
-Include usage examples for common use cases in the **Usage** section. Show your users how to use your module to solve problems, and be sure to include code examples. Include three to five examples of the most important or common tasks a user can accomplish with your module. Show users how to accomplish more complex tasks that involve different types, classes, and functions working in tandem.
+### Install vim
 
-## Reference
-
-This section is deprecated. Instead, add reference information to your code as Puppet Strings comments, and then use Strings to generate a REFERENCE.md in your module. For details on how to add code comments and generate documentation with Strings, see the Puppet Strings [documentation](https://puppet.com/docs/puppet/latest/puppet_strings.html) and [style guide](https://puppet.com/docs/puppet/latest/puppet_strings_style.html)
-
-If you aren't ready to use Strings yet, manually create a REFERENCE.md in the root of your module directory and list out each of your module's classes, defined types, facts, functions, Puppet tasks, task plans, and resource types and providers, along with the parameters for each.
-
-For each element (class, defined type, function, and so on), list:
-
-  * The data type, if applicable.
-  * A description of what the element does.
-  * Valid values, if the data type doesn't make it obvious.
-  * Default value, if any.
-
-For example:
+To install vim, include the module into your manifests:
 
 ```
-### `pet::cat`
-
-#### Parameters
-
-##### `meow`
-
-Enables vocalization in your cat. Valid options: 'string'.
-
-Default: 'medium-loud'.
+include ::vim
 ```
+
+All `Vim` module resources are realized in `Vim::Configure`, so may be included as virtual resources in global user configs, and will only be realized on systems that also include the main `Vim` class or `Vim::Configure`.
+
+### Managing user config
+
+```
+@vim::config { '/home/brwyatt':
+  ensure => present,
+  owner  => 'brwyatt',
+}
+```
+
+This will manage the user's `.vimrc` and setup the user's `.vim` directory, including directories for plugins and bundles.
+
+### Installing plugins
+
+```
+@vim::plugin { 'pathogen':
+  owner    => 'brwyatt',
+  autoload => true,
+  source   =>
+    'https://raw.githubusercontent.com/tpope/vim-pathogen/v2.4/autoload/pathogen.vim',
+  vim_dir  => '/home/brwyatt/.vim',
+}
+```
+
+This installs the plugin at the indicated source to the user's `.vim/plugins` directory, and adds a symlink in `.vim/autoload` to it. The file will be called `pathogen.vim` and is based on this resource's name, and can be overridden by the `plugin_name` parameter.
+
+### Installing bundles
+
+```
+@vim::bundle { 'puppet':
+  ensure   => present,
+  owner    => 'brwyatt',
+  repo     => 'https://github.com/voxpupuli/vim-puppet.git',
+  revision => 'master',
+  vim_dir  => '/home/brwyatt/.vim',
+}
+```
+
+This will install the bundle from the indicated Git repository into the user's `.vim/bundle` directory as "puppet", based on the resource's name. This name can be overridden with the `bundle_name` parameter.
 
 ## Limitations
 
-In the Limitations section, list any incompatibilities, known issues, or other warnings.
+Currently, this module can only install on Debian-based systems and has not been tested on distributions other than Ubuntu 16.04 and 18.04. It may or may not work on other Debian-based distributions, but makes no claims regarding such.
 
 ## Development
 
-In the Development section, tell other users the ground rules for contributing to your project and how they should submit their work.
+Feel free to file issues in the GitHub [issue tracker](https://github.com/brwyatt/puppet-vim/issues) for the repository, or submit [Pull Requests](https://github.com/brwyatt/puppet-vim/pulls).
 
-## Release Notes/Contributors/Etc. **Optional**
+I may not have much time to work on (or test) this myself, so help to expand current functionality (especially to make it work for more people) is greatly appreciated and encouraged.
 
-If you aren't using changelog, put your release notes here (though you should consider using changelog). You can also add any additional sections you feel are necessary or important to include here. Please use the `## ` header.
+## Contributors
+
+The list of contributors can be found at: [https://github.com/brwyatt/puppet-vim/graphs/contributors](https://github.com/brwyatt/puppet-vim/graphs/contributors).
