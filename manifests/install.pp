@@ -1,9 +1,13 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
+# @summary
+#   Installs the vim package. It is not recommended to use this class directly.
 #
 # @example
 #   include vim::install
+#
+# @param package_ensure
+#   Ensure to pass to the package resource.
+# @param package_name
+#   Vim package name for the package resource.
 class vim::install (
   String $package_ensure,
   String $package_name,

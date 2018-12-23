@@ -1,6 +1,5 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
+# @summary
+#   Global vim configuration. Realizes all virtual user configs and sets up resource order. It is not recommended to include this directly.
 #
 # @example
 #   include vim::configure

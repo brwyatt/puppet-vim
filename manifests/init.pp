@@ -1,6 +1,5 @@
-# A description of what this class does
-#
-# @summary A short summary of the purpose of this class
+# @summary
+#   Installs and configures the vim package.
 #
 # @example
 #   include vim

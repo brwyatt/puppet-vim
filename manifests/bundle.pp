@@ -1,9 +1,31 @@
-# A description of what this defined type does
+# @summary
+#   Install Pathogen/vim plugin bundles.
 #
-# @summary A short summary of the purpose of this defined type.
+# @example Install Puppet bundle from GitHub
+#   vim::bundle { 'puppet':
+#     ensure   => present,
+#     owner    => 'brwyatt',
+#     repo     => 'https://github.com/voxpupuli/vim-puppet.git',
+#     revision => 'master',
+#     vim_dir  => '/home/brwyatt/.vim',
+#   }
 #
-# @example
-#   vim::bundle { 'namevar': }
+# @param owner
+#   The username of the owner of this bundle's files.
+# @param repo
+#   URL/Path to the repo source for the bundle.
+# @param vim_dir
+#   Path to the user's `.vim` directory containing the `bundles` directory.
+# @param bundle_name
+#   The bundle's name.
+# @param ensure
+#   Resource ensure value.
+# @param group
+#   Group name for bundle's permissions.
+# @param provider
+#   The provider value to pass to `vcsrepo`. Can be any valid provider accepted by `vcsrepo`.
+# @param revision
+#   Repository revision to checkout.
 define vim::bundle(
   String $owner,
   String $repo,

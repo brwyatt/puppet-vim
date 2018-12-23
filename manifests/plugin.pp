@@ -1,9 +1,32 @@
-# A description of what this defined type does
-#
-# @summary A short summary of the purpose of this defined type.
+# @summary
+#   Install a vim pugin.
 #
 # @example
-#   vim::plugin { 'namevar': }
+#   vim::plugin { 'pathogen':
+#     owner    => 'brwyatt',
+#     autoload => true,
+#     source   =>
+#       'https://raw.githubusercontent.com/tpope/vim-pathogen/v2.4/autoload/pathogen.vim',
+#     vim_dir  => '/home/brwyatt/.vim',
+#   }
+#
+# @param owner
+#   The username of the owner of this plugin.
+# @param vim_dir
+#   Path to the user's `.vim` directory containing the `plugin` and `autoload` directories.
+# @param autoload
+#   Controls if this plugin should be symlinked from the `autoload` directory.
+# @param plugin_name
+#   The plugin's name. `.vim` will be appended to this name if not included.
+# @param ensure
+#   Resource ensure value.
+# @param group
+#   Group name for plugin's permissions.
+# @param content
+#   Content of the plugin file. Mutually exclusive with `$source`.
+# @param source
+#   Source location of the plugin file. Mutually exclusive with `$content`.
+#   Note: if source is an http/https URL, `$content` is ignored completely without error.
 define vim::plugin(
   String $owner,
   String $vim_dir,

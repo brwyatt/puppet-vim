@@ -1,9 +1,24 @@
-# A description of what this defined type does
-#
-# @summary A short summary of the purpose of this defined type.
+# @summary
+#   Manage a user's vim configuration.
 #
 # @example
-#   vim::config { 'namevar': }
+#   vim::config { '/home/brwyatt':
+#     ensure => present,
+#     owner  => 'brwyatt',
+#   }
+#
+# @param owner
+#   Username of the owner of the configs.
+# @param vimrc_template
+#   Template file/path used to generate the user's `.vimrc`.
+# @param vimrc_params
+#   Template params to pass to the template indicated by `$vimrc_template`.
+# @param ensure
+#   Resource ensure.
+# @param group
+#   Name of the group that owns the configs.
+# @param path
+#   The path to the directory containing the configs. This should be the parent directory that the `.vimrc` and `.vim` directory should be created.
 define vim::config(
   String $owner,
   String $vimrc_template = 'vim/pathogen_vimrc.epp',
