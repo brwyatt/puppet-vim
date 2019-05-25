@@ -8,10 +8,22 @@
   "project_page": "https://github.com/brwyatt/puppet-vim",
   "issues_url": "https://github.com/brwyatt/puppet-vim/issues",
   "dependencies": [
-    { "name": "lwf/remote_file", "version_requirement": ">= 1.1.0 < 1.2.0" },
-    { "name": "puppetlabs/git", "version_requirement": ">= 0.5.0 < 0.6.0" },
-    { "name": "puppetlabs/stdlib", "version_requirement": ">= 4.25.0 < 4.26.0" },
-    { "name": "puppetlabs/vcsrepo", "version_requirement": ">= 2.4.0 < 3.0.0" }
+    {
+      "name": "lwf/remote_file",
+      "version_requirement": ">= 1.1.0 < 1.2.0"
+    },
+    {
+      "name": "puppetlabs/git",
+      "version_requirement": ">= 0.5.0 < 0.6.0"
+    },
+    {
+      "name": "puppetlabs/stdlib",
+      "version_requirement": ">= 4.25.0 < 4.26.0"
+    },
+    {
+      "name": "puppetlabs/vcsrepo",
+      "version_requirement": ">= 2.4.0 < 3.0.0"
+    }
   ],
   "operatingsystem_support": [
     {
@@ -28,7 +40,7 @@
       "version_requirement": ">= 4.10.0 < 7.0.0"
     }
   ],
-  "pdk-version": "1.8.0",
-  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git",
-  "template-ref": "1.8.0-0-g0d9da00"
+  "pdk-version": "1.10.0",
+  "template-url": "file:///opt/puppetlabs/pdk/share/cache/pdk-templates.git#1.10.0",
+  "template-ref": "1.10.0-0-gbba9ac3"
 }
