@@ -9,6 +9,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.
 ### Added
 - PDK Update
 - Add Forge credentials to Travis config
+- Fix style guide errors
 
 ## [0.1.1] - 2018-12-23
 ### Added

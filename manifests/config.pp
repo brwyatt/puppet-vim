@@ -18,7 +18,8 @@
 # @param group
 #   Name of the group that owns the configs.
 # @param path
-#   The path to the directory containing the configs. This should be the parent directory that the `.vimrc` and `.vim` directory should be created.
+#   The path to the directory containing the configs. This should be the parent
+#   directory that the `.vimrc` and `.vim` directory should be created.
 define vim::config(
   String $owner,
   String $vimrc_template = 'vim/pathogen_vimrc.epp',
