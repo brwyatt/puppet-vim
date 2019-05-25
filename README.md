@@ -1,5 +1,7 @@
 # vim
 
+[![Build Status](https://travis-ci.com/brwyatt/puppet-vim.svg?branch=master)](https://travis-ci.com/brwyatt/puppet-vim)
+
 [![GitHub license](https://img.shields.io/badge/license-GPL-blue.svg)](https://raw.githubusercontent.com/brwyatt/puppet-vim/master/LICENSE)
 [![GitHub issues](https://img.shields.io/github/issues/brwyatt/puppet-vim.svg)](https://github.com/brwyatt/puppet-vim/issues)
 [![GitHub forks](https://img.shields.io/github/forks/brwyatt/puppet-vim.svg)](https://github.com/brwyatt/puppet-vim/network)
